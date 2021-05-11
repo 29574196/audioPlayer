@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonRange } from '@ionic/angular';
 import {Howl} from 'howler';
+import {BackgroundMode} from '@ionic-native/background-mode/ngx';
 
 export interface Track {
   name: string;
@@ -47,25 +48,28 @@ export class HomePage {
   progress = 0;
   @ViewChild('range',{static: false}) range: IonRange;
 
-  constructor() {}
+  constructor(private backgroundMode: BackgroundMode) {}
 
   start(track: Track){
-    if(this.player){
-      this.player.stop();
-    }
-    this.player = new Howl({
-      src: [track.path],
-      onplay: () => {
-        console.log('onplay');
-        this.isPlaying = true
-        this.activeTrack = track;
-        this.updateProgress();
-      },
-      onend: () => {
-
+    this.backgroundMode.enable();
+    this.backgroundMode.on("activate").subscribe(() => {
+      if(this.player){
+        this.player.stop();
       }
+      this.player = new Howl({
+        src: [track.path],
+        onplay: () => {
+          console.log('onplay');
+          this.isPlaying = true
+          this.activeTrack = track;
+          this.updateProgress();
+        },
+        onend: () => {
+
+        }
+      });
+      this.player.play();
     });
-    this.player.play();
   }
 
   togglePlayer(pause){
