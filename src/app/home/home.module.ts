@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { BackgroundMode } from '@ionic-native/background-mode/ngx';
+import { StreamingAudioOptions, StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
 import { HomePageRoutingModule } from './home-routing.module';
 
 
@@ -15,7 +16,7 @@ import { HomePageRoutingModule } from './home-routing.module';
     IonicModule,
     HomePageRoutingModule,
   ],
-  exports:[BackgroundMode],
+  exports:[BackgroundMode,StreamingMedia],
 
   declarations: [HomePage]
 })

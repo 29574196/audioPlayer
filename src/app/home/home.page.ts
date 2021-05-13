@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonRange } from '@ionic/angular';
 import {Howl} from 'howler';
 import {BackgroundMode} from '@ionic-native/background-mode/ngx';
+import { StreamingAudioOptions, StreamingMedia, StreamingVideoOptions } from '@ionic-native/streaming-media/ngx';
 
 export interface Track {
   name: string;
@@ -48,7 +49,7 @@ export class HomePage {
   progress = 0;
   @ViewChild('range',{static: false}) range: IonRange;
 
-  constructor(private backgroundMode: BackgroundMode) {}
+  constructor(private backgroundMode: BackgroundMode,private streamingMedia: StreamingMedia) {}
 
   start(track: Track){
     if(this.player){
@@ -132,6 +133,15 @@ export class HomePage {
     setTimeout(() => {
       this.updateProgress();
     },1000);
+  }
+
+  playStream(){
+    let options: StreamingAudioOptions = {
+      successCallback: () => { console.log('Video played') },
+      errorCallback: (e) => { console.log('Error streaming') },
+    };
+    
+    this.streamingMedia.playAudio('https://feeds.soundcloud.com/stream/1047641887-bbcpotch-kids-bible-qa-1.mp3', options);
   }
 
 }
