@@ -51,7 +51,25 @@ export class HomePage {
   constructor(private backgroundMode: BackgroundMode) {}
 
   start(track: Track){
+    if(this.player){
+      this.player.stop();
+    }
+    this.player = new Howl({
+      src: [track.path],
+      onplay: () => {
+        console.log('onplay');
+        this.isPlaying = true
+        this.activeTrack = track;
+        this.updateProgress();
+      },
+      onend: () => {
+
+      }
+    });
+    this.player.play();
+
     this.backgroundMode.enable();
+    
     this.backgroundMode.on("activate").subscribe(() => {
       if(this.player){
         this.player.stop();
