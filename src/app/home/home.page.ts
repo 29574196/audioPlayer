@@ -17,7 +17,7 @@ export class HomePage {
   playlist: Track[] = [
     {
       name: 'A new beginning',
-      path: './assets/mp3/bensound-anewbeginning.mp3'
+      path: 'https://feeds.soundcloud.com/stream/1047641887-bbcpotch-kids-bible-qa-1.mp3'
     },
     {
       name: 'Creative Minds',
@@ -69,7 +69,7 @@ export class HomePage {
     this.player.play();
 
     this.backgroundMode.enable();
-    
+
     this.backgroundMode.on("activate").subscribe(() => {
       if(this.player){
         this.player.stop();
